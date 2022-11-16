@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.sv.movie.entity.Response.MovieResponse;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,14 +31,15 @@ public class MovieServiceImpl implements MovieService{
     }
 
     public Optional<Movie> findByTitle(String title){
-        return movieRepo.findByTitle(title);
+        return movieRepo.findByName(title);
     }
 
     public List<Movie> findByFieldSort(Sort sort){ return movieRepo.findByFieldSort(sort); }
     public List<Movie> findByTitleLike(String title){
-        return movieRepo.findByTitleLike(title);
+        return movieRepo.findMoviesByNameLike(title);
     }
-    public List<Movie> findByTitleOrId(String title, int id){
-        return movieRepo.findByTitleOrId(title,id);
+    public List<MovieResponse> findByTitleOrId(String  title, long id){
+        return movieRepo.findByNameOrId(title,id);
     }
+    public Movie saveMovie(Movie movie){return movieRepo.save(movie);}
 }

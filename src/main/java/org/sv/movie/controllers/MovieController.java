@@ -1,6 +1,7 @@
 package org.sv.movie.controllers;
 import org.springframework.data.domain.Sort;
 import org.sv.movie.entity.Movie;
+import org.sv.movie.entity.Response.MovieResponse;
 import org.sv.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,10 +71,12 @@ public class MovieController {
         return serviceMovie.findByFieldSort(Sort.by(field).ascending());
     }
     @GetMapping("/titleLike")
-    public List<Movie> getMoviesTitleLike(String name){return serviceMovie.findByTitleLike(name); }
+    public List<Movie> getMoviesTitleLike(String name){return serviceMovie.findByTitleLike("%"+name+"%"); }
 
     @GetMapping("/GetByTitleOrId")
-    public List<Movie> getByTitleOrId(String title, int id){
+    public List<MovieResponse> getByTitleOrId(String title, long id){
         return serviceMovie.findByTitleOrId(title,id);
     }
+    @PostMapping("/Save")
+    public Movie saveMovie(Movie movie){return serviceMovie.saveMovie(movie);}
 }
