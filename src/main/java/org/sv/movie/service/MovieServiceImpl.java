@@ -19,15 +19,11 @@ public class MovieServiceImpl implements MovieService{
 
     @Autowired
     private MovieRepository movieRepo;
-
-    /*public void MovieServiceImpl(MovieRepository repo){
-        movieRepo=repo;
-    }*/
     @Override
     //de spring framework no el de java
-    @Transactional(readOnly = true)//readOnly para que no realice cambios en la BD
+    //@Transactional(readOnly = true)//readOnly para que no realice cambios en la BD
     public List<Movie> findAll() {
-        return (List<Movie>) movieRepo.findAll();
+        return movieRepo.findAll();
     }
 
     public Optional<Movie> findByTitle(String title){
@@ -42,4 +38,12 @@ public class MovieServiceImpl implements MovieService{
         return movieRepo.findByNameOrId(title,id);
     }
     public Movie saveMovie(Movie movie){return movieRepo.save(movie);}
+
+    public List<Movie> saveMovies(List<Movie> movies) {
+        return movieRepo.saveAll(movies);
+    }
+    public boolean deleteMovie(long idMovie){
+         movieRepo.deleteById(idMovie);
+        return true;
+    }
 }

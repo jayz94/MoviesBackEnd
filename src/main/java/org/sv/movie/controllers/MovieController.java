@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/movies")
+@RequestMapping("movies")
 
 public class MovieController {
     @Autowired//inyeccion de dependencias
@@ -54,16 +54,16 @@ public class MovieController {
 */
 
     @GetMapping
-    public List<Movie> getAll(){
+    public ResponseEntity<List<Movie>> getAll(){
         //se utiliza el StreamSuport de java 8 para convertir el Iterable<Movie> a List<Movie>
         //splitIterator es para iterar cada elemento
         List<Movie> movies = serviceMovie.findAll();
-        return movies;
+        return new ResponseEntity<>(movies,HttpStatus.FOUND);
     }
     @GetMapping("/GetByTitle")
-    public Optional<Movie> getByTile(String title){
+    public ResponseEntity<Optional<Movie>> getByTile(String title){
         Optional<Movie> movies = serviceMovie.findByTitle(title);
-        return movies;
+        return new ResponseEntity<>(movies, HttpStatus.FOUND);
     }
 
     @GetMapping("/GetOrderXField")
@@ -71,12 +71,24 @@ public class MovieController {
         return serviceMovie.findByFieldSort(Sort.by(field).ascending());
     }
     @GetMapping("/titleLike")
-    public List<Movie> getMoviesTitleLike(String name){return serviceMovie.findByTitleLike("%"+name+"%"); }
+    public List<Movie> getMoviesTitleLike(String name){
+        return serviceMovie.findByTitleLike("%"+name+"%");
+    }
 
     @GetMapping("/GetByTitleOrId")
     public List<MovieResponse> getByTitleOrId(String title, long id){
         return serviceMovie.findByTitleOrId(title,id);
     }
-    @PostMapping("/Save")
-    public Movie saveMovie(Movie movie){return serviceMovie.saveMovie(movie);}
+    @PostMapping("/")
+    public ResponseEntity<Movie> saveMovie(@RequestBody  Movie movie){
+        return new ResponseEntity<>(serviceMovie.saveMovie(movie), HttpStatus.CREATED);
+    }
+    @PostMapping("/SaveList")
+    public ResponseEntity<List<Movie>> saveMovies(@RequestBody List<Movie> movies){
+        return new ResponseEntity<>(serviceMovie.saveMovies(movies), HttpStatus.CREATED);
+    }
+    @DeleteMapping("/")
+    public ResponseEntity<Boolean> deleteMovie(@RequestBody long idMovie){
+        return new ResponseEntity<>(serviceMovie.deleteMovie(idMovie),HttpStatus.NO_CONTENT);
+    }
 }

@@ -1,5 +1,6 @@
 package org.sv.movie.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -26,8 +27,9 @@ public class User  implements Serializable {
     @Column(name = "pass", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
+   @JsonIgnore
     private List<Movie> movies = new ArrayList<Movie>();
 
     public User() {
