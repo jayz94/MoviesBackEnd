@@ -5,7 +5,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
 @Table(name = "movie")
 public class Movie implements Serializable {
@@ -15,7 +14,7 @@ public class Movie implements Serializable {
     private long id;
     @Column(name = "name", nullable = false,length = 50, unique = true)
     private String name;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

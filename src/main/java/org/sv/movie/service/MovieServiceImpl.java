@@ -20,7 +20,6 @@ public class MovieServiceImpl implements MovieService{
     @Autowired
     private MovieRepository movieRepo;
     @Override
-    //de spring framework no el de java
     //@Transactional(readOnly = true)//readOnly para que no realice cambios en la BD
     public List<Movie> findAll() {
         return movieRepo.findAll();
