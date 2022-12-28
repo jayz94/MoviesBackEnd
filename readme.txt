@@ -11,7 +11,16 @@ spring.mvc.pathmatch.matching-strategy=ANT_PATH_MATCHER
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
 -se levanta mediante: http://localhost:8080/swagger-ui/index.html
 
+###############
+#para docker
+* agregamos en la raiz el archivo Dockerfile
+*vamos a la pestaña maven luego excecute maven goal->mvn packages y se genera el .jar en /target
+* despues de </plugins en pom.xml agregamos
+<finalName>spring-boot-movies</finalName>
+* vamos a la raiz del proyecto y ejecutamos docker build -t springboot-movie:lastest .
+* docker run -p 8080:8081 idImage
 
+######################
 swagger2
 <dependency>
     <groupId>io.springfox</groupId>
@@ -39,4 +48,7 @@ public class Prueba {
 log.info("Entrando al método test");
 	}
 }
+************************ BD
+url para conectarme a la bd de mi pc
+jdbc:mysql://host.docker.internal:3306/movies?useSSL=true&serverTimezone=Europe/Madrid
 

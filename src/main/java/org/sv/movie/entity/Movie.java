@@ -14,7 +14,7 @@ public class Movie implements Serializable {
     private long id;
     @Column(name = "name", nullable = false,length = 50, unique = true)
     private String name;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
 
